@@ -34,13 +34,10 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
 
-      - name: Set JAR file name as environment variable
-        run: echo "JAR_FILE_NAME=$(ls *.jar)" >> $GITHUB_ENV
-
       - name: Upload artifact to release
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/${{ env.JAR_FILE_NAME }}
-          asset_name: ${{ env.JAR_FILE_NAME }}
+          asset_path: target/calculator-1.0.0.jar
+          asset_name: calculator-1.0.0.jar
           asset_content_type: application/java-archive
