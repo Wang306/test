@@ -10,7 +10,7 @@ public class App {
         double firstNum;
         double secondNum;
 
-        System.out.println("Thanks for using our Addition Calculator!");
+        System.out.println("Thanks for using our Calculator!");
 
         // Keep asking for numbers until the user stops the application
         do {
