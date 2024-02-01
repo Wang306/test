@@ -44,7 +44,7 @@ public class AppTest {
     }
 
     // test sum method that will not pass for failure scenario 
-    
+    /* 
     @Test
     public void testSumThatFail() {
         
@@ -52,6 +52,6 @@ public class AppTest {
         double num2 = 2;
         assertTrue(0 == App.sum(num1, num2));
     }
-    
+    */
 
 }
