@@ -32,12 +32,12 @@ jobs:
           release_name: Release ${{ github.ref }}
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify
-      - name: Save artifacts to staging directory
-        run: mkdir staging && cp target/*.jar staging
+      # - name: Save artifacts to staging directory
+       # run: mkdir staging && cp target/*.jar staging
       - name: Upload artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: staging/*.jar
+          asset_path: target/*.jar
           asset_name: "*.jar"
           asset_content_type: application/java-archive
