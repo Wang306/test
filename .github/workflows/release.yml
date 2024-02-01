@@ -28,14 +28,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
-          tag_name: GITHUB_REF # ${{ github.ref }}
+          tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify
       - name: Save artifacts to staging directory
         run: mkdir staging && cp target/*.jar staging
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-release-asset@v1
         with:
-          name: Package
-          path: staging
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: staging
+          asset_name: package
+          asset_content_type: application/zip
