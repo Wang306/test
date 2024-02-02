@@ -24,9 +24,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cashe: Maven
-
-      - name: Compile and test
-        run: mvn -B package --file pom.xml
       
       - name: Extract version from tag
         uses: damienaicheh/extract-version-from-tag-action@v1.1.0
@@ -35,8 +32,10 @@ jobs:
         run: echo "VERSION=$MAJOR.$MINOR.$PATCH" >> $GITHUB_ENV
 
       - name: Update pom version
-        run: mvn versions:set -DnewVersion=${{ env.VERSION }}
+        run: mvn -B versions:set -DnewVersion=${{ env.VERSION }}
 
+      - name: Compile and test
+        run: mvn -B package --file pom.xml
 
       - name: Create Release
         id: create_release
