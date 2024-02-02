@@ -28,11 +28,11 @@ jobs:
       - name: Extract version from tag
         uses: damienaicheh/extract-version-from-tag-action@v1.1.0
 
-     # - name: Set version for pom
-      #  run: echo "VERSION=$MAJOR.$MINOR.$PATCH" >> $GITHUB_ENV
+      - name: Set version for pom
+        run: echo "VERSION=$MAJOR.$MINOR.$PATCH" >> $GITHUB_ENV
 
       - name: Update pom version
-        run: mvn -B versions:set -DnewVersion=$MAJOR.$MINOR.$PATCH
+        run: mvn -B versions:set -DnewVersion=${{ env.VERSION }}
 
       - name: Compile and test
         run: mvn -B package --file pom.xml
@@ -43,8 +43,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
-          tag_name: v$MAJOR.$MINOR.$PATCH
-          release_name: Release v$MAJOR.$MINOR.$PATCH
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
 
       - name: Set JAR file name as environment variable
         run: echo "JAR_FILE_NAME=$(basename target/*.jar)" >> $GITHUB_ENV
