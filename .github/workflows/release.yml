@@ -15,25 +15,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
+          cashe: Maven
 
       - name: Compile and test
         run: mvn -B package --file pom.xml
       
-      - id: get_version
-        name: Get version
-        uses: jannemattila/get-version-from-tag@v3
+      - name: Extract version from tag
+        uses: damienaicheh/extract-version-from-tag-action@v1.1.0
 
-      - name: Set environment variable
-        run: echo "VERSION=${{ steps.get_version.outputs.version }}" >> $GITHUB_ENV
-
-      - name: Update version in pom
-        run: mvn --batch-mode release:update-versions -DdevelopmentVersion=${{ env.VERSION }}
+      - name: Update pom version
+        run: mvn --batch-mode release:update-versions -DdevelopmentVersion=$MAJOR-$MINOR-$PATCH
 
       - name: Create Release
         id: create_release
