@@ -31,8 +31,11 @@ jobs:
       - name: Extract version from tag
         uses: damienaicheh/extract-version-from-tag-action@v1.1.0
 
+      - name: Set version for pom
+        run: echo "VERSION=$MAJOR.$MINOR.$PATCH" >> $GITHUB_ENV
+
       - name: Update pom version
-        run: mvn versions:set -DnewVersion=$MAJOR.$MINOR.$PATCH-SNAPSHOT
+        run: mvn versions:set -DnewVersion=${{ env.VERSION }}
 
 
       - name: Create Release
