@@ -32,7 +32,7 @@ jobs:
         uses: damienaicheh/extract-version-from-tag-action@v1.1.0
 
       - name: Update pom version
-        run: mvn --batch-mode release:update-versions -DdevelopmentVersion=$MAJOR.$MINOR.$PATCH
+        run: mvn versions:set -DnewVersion=$MAJOR.$MINOR.$PATCH
 
 
       - name: Create Release
