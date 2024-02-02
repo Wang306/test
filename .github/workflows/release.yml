@@ -23,7 +23,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cashe: Maven
       
       - name: Extract version from tag
         uses: damienaicheh/extract-version-from-tag-action@v1.1.0
@@ -43,8 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
-          tag_name: ${{ env.VERSION }}
-          release_name: Release ${{ env.VERSION }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
 
       - name: Set JAR file name as environment variable
         run: echo "JAR_FILE_NAME=$(basename target/*.jar)" >> $GITHUB_ENV
